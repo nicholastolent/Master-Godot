@@ -426,7 +426,7 @@ void FindReplaceBar::_show_search(bool p_focus_replace, bool p_show_only) {
 	show();
 	if (p_show_only)
 		return;
-
+	
 	if (p_focus_replace) {
 		search_text->deselect();
 		replace_text->call_deferred("grab_focus");
@@ -452,6 +452,7 @@ void FindReplaceBar::_show_search(bool p_focus_replace, bool p_show_only) {
 		_update_results_count();
 		_update_matches_label();
 	}
+	search_current();
 }
 
 void FindReplaceBar::popup_search(bool p_show_only) {
@@ -472,7 +473,7 @@ void FindReplaceBar::popup_replace() {
 	}
 
 	selection_only->set_pressed((text_edit->is_selection_active() && text_edit->get_selection_from_line() < text_edit->get_selection_to_line()));
-
+	
 	_show_search(is_visible() || text_edit->is_selection_active());
 }
 
