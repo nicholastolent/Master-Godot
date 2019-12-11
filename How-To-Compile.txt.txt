@@ -1,0 +1,4 @@
+x64 native tools
+
+scons -j8 platform=windows vsproj=yes
+   #num cores#	   #Visual Studios Solution#

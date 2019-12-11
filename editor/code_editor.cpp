@@ -331,20 +331,7 @@ void FindReplaceBar::_update_matches_label() {
 	}
 }
 
-bool FindReplaceBar::search_current() {
 
-	uint32_t flags = 0;
-
-	if (is_whole_words())
-		flags |= TextEdit::SEARCH_WHOLE_WORDS;
-	if (is_case_sensitive())
-		flags |= TextEdit::SEARCH_MATCH_CASE;
-
-	int line, col;
-	_get_search_from(line, col);
-
-	return _search(flags, line, col);
-}
 
 bool FindReplaceBar::search_prev() {
 
@@ -410,6 +397,21 @@ bool FindReplaceBar::search_next() {
 	return _search(flags, line, col);
 }
 
+bool FindReplaceBar::search_current() {
+
+	uint32_t flags = 0;
+
+	int line, col;
+	_get_search_from(line, col);
+
+	if (is_whole_words())
+		flags |= TextEdit::SEARCH_WHOLE_WORDS;
+	if (is_case_sensitive())
+		flags |= TextEdit::SEARCH_MATCH_CASE;
+
+	return _search(flags, line, col);
+}
+
 void FindReplaceBar::_hide_bar() {
 
 	if (replace_text->has_focus() || search_text->has_focus())
@@ -426,7 +428,7 @@ void FindReplaceBar::_show_search(bool p_focus_replace, bool p_show_only) {
 	show();
 	if (p_show_only)
 		return;
-
+	
 	if (p_focus_replace) {
 		search_text->deselect();
 		replace_text->call_deferred("grab_focus");
@@ -452,6 +454,8 @@ void FindReplaceBar::_show_search(bool p_focus_replace, bool p_show_only) {
 		_update_results_count();
 		_update_matches_label();
 	}
+
+	search_current();
 }
 
 void FindReplaceBar::popup_search(bool p_show_only) {
@@ -472,7 +476,7 @@ void FindReplaceBar::popup_replace() {
 	}
 
 	selection_only->set_pressed((text_edit->is_selection_active() && text_edit->get_selection_from_line() < text_edit->get_selection_to_line()));
-
+	
 	_show_search(is_visible() || text_edit->is_selection_active());
 }
 

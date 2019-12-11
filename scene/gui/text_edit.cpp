@@ -2795,6 +2795,18 @@ void TextEdit::_gui_input(const Ref<InputEvent> &p_gui_input) {
 					} else {
 						break;
 					}
+
+					
+					
+				}
+
+				if (is_selection_active()) {
+					if (k->get_shift()) {
+						indent_left();
+					}
+					else {
+						indent_right();
+					}
 				}
 
 				if (is_folded(cursor.line))
